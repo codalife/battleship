@@ -75,9 +75,12 @@ button {
 }
 .picker {
   /* box-sizing: content-box; */
-  /* display: flex;
-  flex: 1; */
-  background: blue;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  background: lightblue;
+  padding: 3em;
+  align-items: center;
   margin: 1em;
   width: 30vw;
   /* height: 30vw; */

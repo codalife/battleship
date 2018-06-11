@@ -45,6 +45,7 @@ class PlaceShips extends Component {
     this.createBoard = this.createBoard.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.setShip = this.setShip.bind(this);
+    this.pickShipType = this.pickShipType.bind(this);
   }
   createBoard(row, column, size) {
     let matrix = [];
@@ -55,8 +56,14 @@ class PlaceShips extends Component {
       matrix = populateMatrix();
     }
 
-    if (size) {
-      toggleHorizontal(matrix, this.state.horizontal, 4, row, column);
+    if (this.state && this.state.type) {
+      toggleHorizontal(
+        matrix,
+        this.state.horizontal,
+        this.state.type,
+        row,
+        column,
+      );
     }
 
     return matrix.map((row, rowIndex) => (
@@ -77,7 +84,7 @@ class PlaceShips extends Component {
   }
   handleHover(row, column) {
     this.setState({
-      board: this.createBoard(row, column, 4),
+      board: this.createBoard(row, column),
     });
   }
   setShip(row, column, size) {
@@ -112,6 +119,14 @@ class PlaceShips extends Component {
       board: this.createBoard(),
     });
   }
+  pickShipType(type) {
+    this.setState(
+      {
+        type,
+      },
+      () => console.log(this.state.type),
+    );
+  }
   render() {
     return (
       <div className="gameHolder">
@@ -120,7 +135,7 @@ class PlaceShips extends Component {
             {this.state.board}
           </div>
 
-          <ShipPicker />
+          <ShipPicker pickShipType={this.pickShipType} />
         </div>
 
         <button>
