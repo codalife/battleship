@@ -46,7 +46,13 @@ class PlaceShips extends Component {
     this.setShip = this.setShip.bind(this);
   }
   createBoard(row, column, size) {
-    const matrix = populateMatrix();
+    let matrix = [];
+
+    if (this.state) {
+      this.state.placedBoard.forEach(row => matrix.push(row.slice()));
+    } else {
+      matrix = populateMatrix();
+    }
 
     if (size) {
       toggleHorizontal(matrix, this.state.horizontal, 4, row, column);
@@ -68,25 +74,24 @@ class PlaceShips extends Component {
       </div>
     ));
   }
-  setShip(row, column, size) {
-    const matrix = this.state.placedBoard;
-
-    toggleHorizontal(matrix, this.horizontal, size, row, column);
-
-    return matrix;
-  }
   handleHover(row, column) {
     this.setState({
       board: this.createBoard(row, column, 4),
     });
   }
+  setShip(row, column, size) {
+    const matrix = [];
+
+    this.state.placedBoard.forEach(row => matrix.push(row.slice()));
+
+    toggleHorizontal(matrix, this.state.horizontal, size, row, column);
+
+    return matrix;
+  }
   handleClick(row, column) {
-    this.setState(
-      {
-        placedBoard: this.setShip(row, column, 4),
-      },
-      () => console.log(this.state.placedBoard),
-    );
+    this.setState({
+      placedBoard: this.setShip(row, column, 4),
+    });
   }
   contextMenu(row, column, e) {
     e.preventDefault();
