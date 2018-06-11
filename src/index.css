@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 body {
   margin: 0;
   padding: 0;
@@ -8,19 +11,33 @@ section {
   display: flex;
   justify-content: center;
 }
+a {
+  text-decoration: none;
+}
+button {
+  width: 300px;
+  height: 50px;
+  border-radius: 0.2em;
+  background: burlywood;
+  font-size: 1em;
+}
 .gameHolder {
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   margin: 20px;
+}
+.boards {
+  display: flex;
 }
 .row {
   display: flex;
   width: 100%;
   flex: 1;
   background: rgba(238, 228, 218, 0.35);
-  border-left: 5px solid black;
-  border-right: 5px solid black;
+  /* border-left: 5px solid black;
+  border-right: 5px solid black; */
 }
 .row:nth-of-type(1) {
   border-top: 5px solid black;
@@ -37,8 +54,8 @@ section {
   border: 1px solid white;
 }
 .ship {
-  display: flex;
-  flex: 1;
+  /* display: flex;
+  flex: 1; */
   height: 3vw;
   width: 3vw;
   border: 1px solid white;
@@ -47,4 +64,48 @@ section {
 .ocean {
   background-image: url('https://image.freepik.com/free-photo/blue-water-surface-in-swimming-pool-background_3236-1365.jpg?size=260&ext=jpg');
   background-size: cover;
+  margin: 1em;
+}
+.missle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: red;
+  border-radius: 50%;
+}
+.picker {
+  /* box-sizing: content-box; */
+  /* display: flex;
+  flex: 1; */
+  background: blue;
+  margin: 1em;
+  width: 30vw;
+  /* height: 30vw; */
+}
+
+.cannon {
+  display: flex;
+  width: 50px;
+  height: 54px;
+  background: black;
+  border-radius: 50%;
+  margin-right: 54px;
+}
+
+.cannon::before {
+  content: '';
+  margin-left: 25px;
+  border-left: 50px solid black;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  width: 0;
+  height: 15px;
+}
+
+.cannon::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  background: black;
+  border-radius: 50%;
 }

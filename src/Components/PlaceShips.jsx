@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import ShipPicker from './ShipPicker';
 
 function populateMatrix() {
   const matrix = [];
@@ -114,13 +115,29 @@ class PlaceShips extends Component {
   render() {
     return (
       <div className="gameHolder">
-        <Link to="/game">Build your fleet</Link>
-        <div className="ocean" onMouseLeave={this.handleMouseLeave}>
-          {this.state.board}
+        <div className="boards">
+          <div className="ocean" onMouseLeave={this.handleMouseLeave}>
+            {this.state.board}
+          </div>
+
+          <ShipPicker />
         </div>
+
+        <button>
+          <Link to="/game">Build your fleet</Link>
+        </button>
       </div>
     );
   }
 }
 
 export default PlaceShips;
+
+/*
+TODO:
+1. Detect collision
+2. Make placed ships different color
+3. Feature: remove a ship
+4. Feature: drag ship
+5. Feature: rotate ship
+*/

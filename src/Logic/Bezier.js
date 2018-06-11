@@ -1,7 +1,9 @@
 function Bezier(start, end) {
   const points = [];
-  const A = [100, 100];
-  const B = [200, 100];
+
+  const height = end[1] - Math.abs(start[1] - end[1]) * 0.3;
+  const A = [start[0], height];
+  const B = [end[0], height];
 
   for (let i = 0; i <= 100; i += 1) {
     let t;
@@ -26,3 +28,5 @@ function Bezier(start, end) {
 
   return points;
 }
+
+export default Bezier;
