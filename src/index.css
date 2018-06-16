@@ -70,7 +70,7 @@ button {
   position: absolute;
   width: 20px;
   height: 20px;
-  background: red;
+  background: black;
   border-radius: 50%;
 }
 .picker {
@@ -111,4 +111,24 @@ button {
   height: 20px;
   background: black;
   border-radius: 50%;
+}
+
+.flipper {
+  transform: rotateY(90deg);
+
+  transition: all 1s;
+  transform-style: preserve-3d;
+  perspective: 600px;
+}
+
+.comp {
+  transition: all 1s;
+  /* transform: rotateY(-90deg); */
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: space-between;
 }

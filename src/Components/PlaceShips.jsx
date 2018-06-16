@@ -30,6 +30,14 @@ function toggleHorizontal(matrix, horizontal, size, row, column) {
   }
 }
 
+function flip() {
+  const target = document.querySelector('.picker');
+  console.log(target);
+  if (target) {
+    target.classList.add('flipper');
+  }
+}
+
 class PlaceShips extends Component {
   constructor(props) {
     super(props);
@@ -38,6 +46,13 @@ class PlaceShips extends Component {
       placedBoard: populateMatrix(),
       board: this.createBoard(),
       horizontal: true,
+      isPlacing: false,
+      toPlace: [
+        { name: 'Battleship', type: 4, count: 1 },
+        { name: 'Cruiser', type: 3, count: 2 },
+        { name: 'Destroyer', type: 2, count: 3 },
+        { name: 'Submarine', type: 1, count: 4 },
+      ],
     };
     this.handleHover = this.handleHover.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -46,6 +61,7 @@ class PlaceShips extends Component {
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.setShip = this.setShip.bind(this);
     this.pickShipType = this.pickShipType.bind(this);
+    this.setToInit = this.setToInit.bind(this);
   }
   createBoard(row, column, size) {
     let matrix = [];
@@ -83,23 +99,45 @@ class PlaceShips extends Component {
     ));
   }
   handleHover(row, column) {
-    this.setState({
-      board: this.createBoard(row, column),
-    });
+    if (this.state.isPlacing) {
+      this.setState({
+        board: this.createBoard(row, column),
+      });
+    }
   }
-  setShip(row, column, size) {
+  setShip(row, column) {
     const matrix = [];
 
     this.state.placedBoard.forEach(row => matrix.push(row.slice()));
 
-    toggleHorizontal(matrix, this.state.horizontal, size, row, column);
+    toggleHorizontal(
+      matrix,
+      this.state.horizontal,
+      this.state.type,
+      row,
+      column,
+    );
 
     return matrix;
   }
   handleClick(row, column) {
-    this.setState({
-      placedBoard: this.setShip(row, column, 4),
-    });
+    if (this.state.isPlacing) {
+      const toPlace = [...this.state.toPlace];
+
+      toPlace.forEach((data, index) => {
+        if (data.type === this.state.type) {
+          toPlace[index].count -= 1;
+          if (data.count === 0) {
+            this.setToInit();
+          }
+        }
+      });
+
+      this.setState({
+        placedBoard: this.setShip(row, column),
+        toPlace,
+      });
+    }
   }
   contextMenu(row, column, e) {
     e.preventDefault();
@@ -110,7 +148,7 @@ class PlaceShips extends Component {
       },
       () =>
         this.setState({
-          board: this.createBoard(row, column, 4),
+          board: this.createBoard(row, column),
         }),
     );
   }
@@ -120,12 +158,16 @@ class PlaceShips extends Component {
     });
   }
   pickShipType(type) {
-    this.setState(
-      {
-        type,
-      },
-      () => console.log(this.state.type),
-    );
+    this.setState({
+      type,
+      isPlacing: true,
+    });
+  }
+  setToInit() {
+    console.log(this.state.isPlacing);
+    this.setState({
+      isPlacing: false,
+    });
   }
   render() {
     return (
@@ -135,7 +177,11 @@ class PlaceShips extends Component {
             {this.state.board}
           </div>
 
-          <ShipPicker pickShipType={this.pickShipType} />
+          <ShipPicker
+            toPlace={this.state.toPlace}
+            pickShipType={this.pickShipType}
+            setToInit={this.setToInit}
+          />
         </div>
 
         <button>

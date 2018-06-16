@@ -1,29 +1,21 @@
 import React, { Component } from 'react';
+import ShipMenu from './ShipMenu';
 
 class ShipPicker extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-  handleClick(type) {
-    this.props.pickShipType(type);
-  }
   render() {
+    const shipMenus = this.props.toPlace.map((data, index) => (
+      <ShipMenu
+        key={`menu${index}`}
+        pickShipType={this.props.pickShipType}
+        setToInit={this.props.setToInit}
+        data={data}
+      />
+    ));
+
     return (
       <div className="picker">
         <h2>Picker</h2>
-        <div className="shadow" onClick={() => this.handleClick(4)}>
-          Carrier
-        </div>
-        <div className="shadow" onClick={() => this.handleClick(3)}>
-          Battleship
-        </div>
-        <div className="shadow" onClick={() => this.handleClick(2)}>
-          Cruiser
-        </div>
-        <div className="shadow" onClick={() => this.handleClick(1)}>
-          Destroyer
-        </div>
+        {shipMenus}
       </div>
     );
   }

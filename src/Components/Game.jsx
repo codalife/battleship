@@ -14,6 +14,12 @@ class Game extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.createBoard = this.createBoard.bind(this);
   }
+  componentDidMount() {
+    const comp = document.querySelector('.comp');
+    console.dir(comp);
+
+    comp.classList.remove('flipper');
+  }
   createBoard() {
     return this.state.game.player.map((row, rowIndex) => (
       <div className="row" key={`row${rowIndex}`}>
@@ -63,7 +69,10 @@ class Game extends Component {
           <div className="ocean" onMouseLeave={this.handleMouseLeave}>
             {player}
           </div>
-          <div className="ocean" onMouseLeave={this.handleMouseLeave}>
+          <div
+            className="ocean comp flipper"
+            onMouseLeave={this.handleMouseLeave}
+          >
             {player}
           </div>
         </div>
